@@ -11,7 +11,8 @@ defmodule Mykbank.Application do
     children = [
       # Starts a worker by calling: Mixproject.Worker.start_link(arg)
       # {Mixproject.Worker, arg}
-      Bank.Supervisor
+      Bank.Supervisor,
+      {Plug.Cowboy, scheme: :http, plug: Server.Router, options: [port: 4001]}
     ]
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
