@@ -153,6 +153,14 @@ function delete_account(account)
   })
 }
 
+function handleClick(props) {
+  const intput_text = document.getElementById("search_text").value;
+  HTTP.get("/search?" + intput_text).then(res => {
+    props.account.value = res;
+    ReactDOM.render(<Account {...props}/>, document.getElementById('root'))
+  })
+}
+
 var Account = createReactClass({
   statics: {
     remoteProps: [remoteProps.accounts]
@@ -164,7 +172,8 @@ var Account = createReactClass({
     new_orders.map( order =>
       console.log(order)
     )
-    return <JSXZ in="page" sel=".layout">
+    return <JSXZ in="accounts" sel=".layout">
+    <Z sel=".submit-button-3" onClick={(e) => handleClick(this.props)}></Z>
     <Z sel=".table-body">
     {
       new_orders.map( order => (<JSXZ in="page" key={i++} sel=".table-line">
@@ -172,7 +181,7 @@ var Account = createReactClass({
       <Z sel=".col-2"><button id="add" onClick={(e) => lastname(order.account)}> = </button> {order.lastname} {order.firstname} <button id="add" onClick={(e) => firstname(order.account)}> = </button></Z>
       <Z sel=".col-3"><button id="add" onClick={(e) => add(order.account)}> + </button> {order.amount} <button id="add" onClick={(e) => rem(order.account)}> - </button></Z>
       <Z sel=".col-4">{order.update}</Z>
-      <Z sel=".col-6" onClick={(e) => delete_account(order.account)}></Z>
+      <Z sel=".col-6" onClick={(e) => delete_account(order.account)}><ChildrenZ/></Z>
       </JSXZ>))
     }
     </Z>

@@ -1,7 +1,7 @@
 db = :bank
 
 Bank.Supervisor.start_link(42)
-{:ok, macron_account} = Bank.Server.create(db, %{'lastname' => 'Macron', 'firstname' => 'Emmanuel'})
+{:ok, macron_account} = Bank.Server.create(db, %{'lastname' => "Macron", 'firstname' => "Emmanuel"})
 {:ok, melanchon_account} = Bank.Server.create(db, %{'lastname' => 'Melanchon', 'firstname' => 'Jean-Luc'})
 Bank.Server.add(db, {macron_account, 1000000})
 Bank.Server.retrieve(db, {macron_account, 500000})

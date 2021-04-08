@@ -11163,6 +11163,15 @@ function delete_account(account) {
   });
 }
 
+function handleClick(props) {
+
+  var intput_text = document.getElementById("search_text").value;
+  HTTP.get("/search?" + intput_text).then(function (res) {
+    props.account.value = res;
+    ReactDOM.render(React.createElement(Account, props), document.getElementById('root'));
+  });
+}
+
 var Account = createReactClass({
   displayName: 'Account',
 
@@ -11170,6 +11179,8 @@ var Account = createReactClass({
     remoteProps: [remoteProps.accounts]
   },
   render: function render() {
+    var _this2 = this;
+
     console.log(this.props);
     var new_orders = this.props.account.value;
     var i = 0;
@@ -11224,224 +11235,348 @@ var Account = createReactClass({
                       },
                       '\uF0D1'
                     )
-                  ),
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  {
+                    className: 'form'
+                  },
                   React.createElement(
                     'div',
                     {
-                      className: 'table'
+                      className: 'search'
                     },
                     React.createElement(
                       'div',
                       {
-                        className: 'table-headder'
+                        className: 'form-search w-form'
                       },
                       React.createElement(
+                        'form',
+                        {
+                          id: 'email-form',
+                          name: 'email-form',
+                          'data-name': 'Email Form',
+                          className: 'form-4'
+                        },
+                        React.createElement(
+                          'label',
+                          {
+                            htmlFor: 'name',
+                            className: 'field-label-4'
+                          },
+                          'Search ',
+                          React.createElement(
+                            'span',
+                            {
+                              className: 'text-span-5'
+                            },
+                            '\uF002'
+                          )
+                        ),
+                        React.createElement('input', {
+                          type: 'text',
+                          id: 'search_text',
+                          className: 'text-field-3 w-input',
+                          maxLength: 256,
+                          name: 'name',
+                          'data-name': 'Name',
+                          placeholder: ''
+                        }),
+                        React.createElement('input', {
+                          type: 'button',
+                          defaultValue: 'Submit',
+                          'data-wait': 'Please wait...',
+                          className: 'submit-button-3 w-button',
+                          onClick: function onClick(e) {
+                            return handleClick(_this2.props);
+                          } })
+                      ),
+                      React.createElement(
                         'div',
                         {
-                          className: 'col-1'
+                          className: 'w-form-done'
                         },
                         React.createElement(
                           'div',
                           null,
-                          'Account Number'
+                          'Thank you! Your submission has been received!'
                         )
                       ),
                       React.createElement(
                         'div',
                         {
-                          className: 'col-2'
+                          className: 'w-form-fail'
                         },
                         React.createElement(
                           'div',
                           null,
-                          'Customer'
-                        )
-                      ),
-                      React.createElement(
-                        'div',
-                        {
-                          className: 'col-3'
-                        },
-                        React.createElement(
-                          'div',
-                          null,
-                          'Amount'
-                        )
-                      ),
-                      React.createElement(
-                        'div',
-                        {
-                          className: 'col-4'
-                        },
-                        React.createElement(
-                          'div',
-                          null,
-                          'Last update date'
-                        )
-                      ),
-                      React.createElement(
-                        'div',
-                        {
-                          className: 'col-6'
-                        },
-                        React.createElement(
-                          'div',
-                          null,
-                          'Delete'
+                          'Oops! Something went wrong while submitting the form.'
                         )
                       )
-                    ),
-                    React.createElement(
-                      'div',
-                      {
-                        className: 'table-body'
-                      },
-                      new_orders.map(function (order) {
-                        return React.createElement(
-                          'div',
-                          {
-                            className: 'table-line',
-                            key: i++ },
-                          React.createElement(
-                            'div',
-                            {
-                              className: 'col-1'
-                            },
-                            order.account
-                          ),
-                          React.createElement(
-                            'div',
-                            {
-                              className: 'col-2'
-                            },
-                            React.createElement(
-                              'button',
-                              { id: 'add', onClick: function onClick(e) {
-                                  return lastname(order.account);
-                                } },
-                              ' = '
-                            ),
-                            ' ',
-                            order.lastname,
-                            ' ',
-                            order.firstname,
-                            ' ',
-                            React.createElement(
-                              'button',
-                              { id: 'add', onClick: function onClick(e) {
-                                  return firstname(order.account);
-                                } },
-                              ' = '
-                            )
-                          ),
-                          React.createElement(
-                            'div',
-                            {
-                              className: 'col-3'
-                            },
-                            React.createElement(
-                              'button',
-                              { id: 'add', onClick: function onClick(e) {
-                                  return add(order.account);
-                                } },
-                              ' + '
-                            ),
-                            ' ',
-                            order.amount,
-                            ' ',
-                            React.createElement(
-                              'button',
-                              { id: 'add', onClick: function onClick(e) {
-                                  return rem(order.account);
-                                } },
-                              ' - '
-                            )
-                          ),
-                          React.createElement(
-                            'div',
-                            {
-                              className: 'col-4'
-                            },
-                            order.update
-                          ),
-                          React.createElement(
-                            'div',
-                            {
-                              className: 'col-6',
-                              onClick: function onClick(e) {
-                                return delete_account(order.account);
-                              } },
-                            '\uF2ED'
-                          )
-                        );
-                      })
                     )
                   ),
                   React.createElement(
                     'div',
                     {
-                      className: 'footer'
+                      className: 'login'
                     },
                     React.createElement(
                       'div',
                       {
-                        className: 'pagination'
+                        className: 'form-login w-form'
                       },
                       React.createElement(
-                        'div',
+                        'form',
                         {
-                          className: 'firstpage'
+                          id: 'email-form',
+                          name: 'email-form',
+                          'data-name': 'Email Form',
+                          className: 'form-5'
                         },
-                        '\uF04A'
+                        React.createElement(
+                          'label',
+                          {
+                            htmlFor: 'name-2',
+                            className: 'field-label-5'
+                          },
+                          'John Doe'
+                        ),
+                        React.createElement('input', {
+                          type: 'submit',
+                          defaultValue: 'Login',
+                          'data-wait': 'Please wait...',
+                          className: 'w-button'
+                        })
                       ),
                       React.createElement(
                         'div',
                         {
-                          className: 'previouspage'
+                          className: 'w-form-done'
                         },
                         React.createElement(
-                          'span',
-                          {
-                            className: 'text-span-6'
-                          },
-                          '\uF060'
+                          'div',
+                          null,
+                          'Thank you! Your submission has been received!'
                         )
                       ),
                       React.createElement(
                         'div',
                         {
-                          className: 'currentpage'
+                          className: 'w-form-fail'
                         },
-                        '1'
-                      ),
-                      React.createElement(
-                        'div',
-                        {
-                          className: 'nextpage'
-                        },
-                        '\uF061'
-                      ),
-                      React.createElement(
-                        'div',
-                        {
-                          className: 'lastpage'
-                        },
-                        '\uF04E'
+                        React.createElement(
+                          'div',
+                          null,
+                          'Oops! Something went wrong while submitting the form.'
+                        )
                       )
+                    )
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  {
+                    className: 'table'
+                  },
+                  React.createElement(
+                    'div',
+                    {
+                      className: 'table-headder'
+                    },
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'col-1'
+                      },
+                      React.createElement(
+                        'div',
+                        null,
+                        'Account Number'
+                      )
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'col-2'
+                      },
+                      React.createElement(
+                        'div',
+                        null,
+                        'Customer'
+                      )
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'col-3'
+                      },
+                      React.createElement(
+                        'div',
+                        null,
+                        'Amount'
+                      )
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'col-4'
+                      },
+                      React.createElement(
+                        'div',
+                        null,
+                        'Last update date'
+                      )
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'col-6'
+                      },
+                      React.createElement(
+                        'div',
+                        null,
+                        'Delete'
+                      )
+                    )
+                  ),
+                  React.createElement(
+                    'div',
+                    {
+                      className: 'table-body'
+                    },
+                    new_orders.map(function (order) {
+                      return React.createElement(
+                        'div',
+                        {
+                          className: 'table-line',
+                          key: i++ },
+                        React.createElement(
+                          'div',
+                          {
+                            className: 'col-1'
+                          },
+                          order.account
+                        ),
+                        React.createElement(
+                          'div',
+                          {
+                            className: 'col-2'
+                          },
+                          React.createElement(
+                            'button',
+                            { id: 'add', onClick: function onClick(e) {
+                                return lastname(order.account);
+                              } },
+                            ' = '
+                          ),
+                          ' ',
+                          order.lastname,
+                          ' ',
+                          order.firstname,
+                          ' ',
+                          React.createElement(
+                            'button',
+                            { id: 'add', onClick: function onClick(e) {
+                                return firstname(order.account);
+                              } },
+                            ' = '
+                          )
+                        ),
+                        React.createElement(
+                          'div',
+                          {
+                            className: 'col-3'
+                          },
+                          React.createElement(
+                            'button',
+                            { id: 'add', onClick: function onClick(e) {
+                                return add(order.account);
+                              } },
+                            ' + '
+                          ),
+                          ' ',
+                          order.amount,
+                          ' ',
+                          React.createElement(
+                            'button',
+                            { id: 'add', onClick: function onClick(e) {
+                                return rem(order.account);
+                              } },
+                            ' - '
+                          )
+                        ),
+                        React.createElement(
+                          'div',
+                          {
+                            className: 'col-4'
+                          },
+                          order.update
+                        ),
+                        React.createElement(
+                          'div',
+                          {
+                            className: 'col-6',
+                            onClick: function onClick(e) {
+                              return delete_account(order.account);
+                            } },
+                          React.createElement(
+                            'a',
+                            {
+                              className: 'button w-button'
+                            },
+                            '\uF2ED'
+                          )
+                        )
+                      );
+                    })
+                  )
+                ),
+                React.createElement(
+                  'div',
+                  {
+                    className: 'footer'
+                  },
+                  React.createElement(
+                    'div',
+                    {
+                      className: 'pagination'
+                    },
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'previouspage'
+                      },
+                      '\uF060'
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'currentpage'
+                      },
+                      '1'
+                    ),
+                    React.createElement(
+                      'div',
+                      {
+                        className: 'nextpage'
+                      },
+                      '\uF061'
                     )
                   )
                 )
               )
             )
           )
-        ),
-        React.createElement('div', {
-          className: 'modal-wrapper'
-        }),
-        React.createElement('div', {
-          className: 'loader-wrapper'
-        })
-      )
+        )
+      ),
+      React.createElement('div', {
+        className: 'modal-wrapper'
+      }),
+      React.createElement('div', {
+        className: 'loader-wrapper'
+      })
     );
   }
 });

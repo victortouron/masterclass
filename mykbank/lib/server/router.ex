@@ -48,6 +48,24 @@ defmodule Server.Router do
     send_resp(conn, 200, json)
   end
 
+  get "/search" do
+    qs =  conn.query_string
+    query = String.replace(qs, "=", ":")
+    accounts_map = Bank.Server.get_table()
+    search = Enum.reduce(accounts_map, [], fn user, acc ->
+      {order, map} = user
+      res = Enum.member?(Map.values(map), query)
+      values = Map.values(map)
+      if res == true do
+        acc ++ [user]
+      else
+        acc
+      end
+    end)
+    final = Poison.encode!(Enum.map(search, fn {_key, map} -> map end))
+    send_resp(conn, 200, final)
+  end
+
   get _ do
     send_file(conn, 200, "lib/priv/static/index.html")
   end
